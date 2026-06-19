@@ -1,17 +1,26 @@
 pipeline {
     agent any
-    stages{
-        stage('workspace_clean'){
-        }
-        stage('pull'){
-            steps{
-                sh 'git clone https://github.com/ahvnavs/MVP.git'
+
+    stages {
+
+        stage('workspace_clean') {
+            steps {
+                cleanWs()
             }
         }
-        stage('docker build'){
-            steps{
-                sh 'cd infra'
-                sh 'docker copmose up -d --build'
+
+        stage('pull') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/ahvnavs/MVP.git'
+            }
+        }
+
+        stage('docker build') {
+            steps {
+                dir('infra') {
+                    sh 'docker compose up -d --build'
+                }
             }
         }
     }

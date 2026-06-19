@@ -4,11 +4,15 @@ pipeline {
         stage('workspace_clean'){
         }
         stage('pull'){
-            sh 'git clone https://github.com/ahvnavs/MVP.git'
+            steps{
+                sh 'git clone https://github.com/ahvnavs/MVP.git'
+            }
         }
         stage('docker build'){
-            sh 'cd infra'
-            sh 'docker copmose up -d --build'
+            steps{
+                sh 'cd infra'
+                sh 'docker copmose up -d --build'
+            }
         }
     }
 }
